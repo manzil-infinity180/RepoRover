@@ -1,0 +1,38 @@
+{
+  "projects": {
+    "default": {
+      "project_name": "KubeStellar Core",
+      "docs_url": "https://docs.kubestellar.io",
+      "github_url": "https://github.com/kubestellar/kubestellar",
+      "description": "Multi-cluster configuration management for Kubernetes",
+      "maintainers": ["Andy"]
+    },
+    "kubeflex": {
+      "project_name": "KubeFlex",
+      "docs_url": "https://github.com/kubestellar/kubeflex#readme",
+      "github_url": "https://github.com/kubestellar/kubeflex",
+      "description": "Flexible Kubernetes cluster management",
+      "maintainers": ["Andy"]
+    },
+    "ui": {
+      "project_name": "KubeStellar UI",
+      "docs_url": "https://github.com/kubestellar/ui#readme",
+      "github_url": "https://github.com/kubestellar/ui",
+      "description": "Web-based user interface for KubeStellar",
+      "maintainers": ["Andy"]
+    },
+    "a2a": {
+      "project_name": "App-to-App (A2A)",
+      "docs_url": "https://github.com/kubestellar/a2a#readme", 
+      "github_url": "https://github.com/kubestellar/a2a",
+      "description": "Application-to-application communication framework",
+      "maintainers": ["Andy"]
+    }
+  },
+  "organization": {
+    "name": "KubeStellar",
+    "website": "https://kubestellar.io",
+    "docs": "https://docs.kubestellar.io",
+    "github": "https://github.com/kubestellar"
+  }
+}
