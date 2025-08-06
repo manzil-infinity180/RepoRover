@@ -233,7 +233,7 @@ def create_help_blocks(user_id):
             "type": "header",
             "text": {
                 "type": "plain_text",
-                "text": "🤖 KubeStellar Bot - Command Center"
+                "text": "🤖 KubeStellar Bot"
             }
         },
         {
@@ -327,6 +327,133 @@ def create_help_blocks(user_id):
         {
             "type": "divider"
         },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "🌟 *Quick Links*"
+            }
+        },
+        {
+            "type": "actions",
+            "elements": [
+                {
+                    "type": "button",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "🌐 Website"
+                    },
+                    "style": "primary",
+                    "url": org_info.get('website', 'https://kubestellar.io')
+                },
+                {
+                    "type": "button",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "📖 Documentation"
+                    },
+                    "url": org_info.get('docs', 'https://docs.kubestellar.io')
+                },
+                {
+                    "type": "button",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "🔗 GitHub Org"
+                    },
+                    "url": org_info.get('github', 'https://github.com/kubestellar')
+                },
+                {
+                    "type": "button",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "✨ Join Us"
+                    },
+                    "url": org_info.get('github', 'http://kubestellar.io/join_us')
+                }
+            ]
+        },
+        {
+            "type": "context",
+            "elements": [
+                {
+                    "type": "mrkdwn",
+                    "text": "💡 *Pro Tip:* Start with `/contribute` to get familiar with our main project, then explore specific components!"
+                }
+            ]
+        },
+        {
+            "type": "context",
+            "elements": [
+                {
+                    "type": "mrkdwn",
+                    "text": "🚀 *Welcome to the KubeStellar community!*"
+                }
+            ]
+        }
+    ])
+
+    return blocks
+
+def create_meeting_blocks(user_id):
+    """Create meeting message blocks"""
+    config = load_maintainers_config()
+    projects = config.get("projects", {})
+    org_info = config.get("organization", {})
+
+    blocks = [
+        {
+            "type": "header",
+            "text": {
+                "type": "plain_text",
+                "text": "🎯 Interested in Joining KubeStellar Community Meeting?"
+            }
+        },
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"Hi <@{user_id}>! 🌟 *Welcome to our open source community!* We're excited you want to get involved."
+            }
+        },
+        {
+            "type": "divider"
+        },        
+    ]
+
+    # Add maintainers for each project
+    for project_key, project_data in projects.items():
+        maintainers = format_maintainers(project_data.get("maintainers", []))
+        project_name = project_data.get(
+            "project_name", project_key.replace("_", " ").title()
+        )
+        blocks.append({
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*{project_name}:* {maintainers}"
+            }
+        })
+
+        blocks.extend([
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": (
+                    "*📅 Community Meeting Info*\n"
+                    "<http://kubestellar.io/join_us|👉 Get an invite by joining our Google Group>\n\n"
+                    "*📝 Agenda & Meeting Notes*\n"
+                    "<https://docs.google.com/document/d/1XppfxSOD7AOX1lVVVIPWjpFkrxakfBfVzcybRg17-PM/|View Document>"
+                )
+            }
+        },
+        {
+            "type": "divider"
+        }
+    ])
+
+    # Add quick links section
+    blocks.extend([
         {
             "type": "section",
             "text": {
