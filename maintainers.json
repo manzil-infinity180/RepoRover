@@ -11,7 +11,7 @@
       "project_name": "KubeFlex",
       "docs_url": "https://github.com/kubestellar/kubeflex#readme",
       "github_url": "https://github.com/kubestellar/kubeflex",
-      "description": "Flexible Kubernetes cluster management",
+      "description": "A flexible and scalable platform for running Kubernetes control plane APIs.",
       "maintainers": ["Andy"]
     },
     "ui": {
@@ -22,10 +22,10 @@
       "maintainers": ["Andy"]
     },
     "a2a": {
-      "project_name": "App-to-App (A2A)",
+      "project_name": "KubeStellar Agent2Agent/MCP Protocol",
       "docs_url": "https://github.com/kubestellar/a2a#readme", 
       "github_url": "https://github.com/kubestellar/a2a",
-      "description": "Application-to-application communication framework",
+      "description": "KubeStellar's A2A and MCP server component",
       "maintainers": ["Andy"]
     }
   },
