@@ -368,6 +368,11 @@ def create_meeting_blocks(user_id):
                 "type": "mrkdwn",
                 "text": f"Hi <@{user_id}>! 🌟 *Welcome to our open source community!* We're excited you want to get involved.",
             },
+            "accessory": {
+                "type": "image",
+                "image_url": "https://avatars.githubusercontent.com/u/134407106?s=200&v=4",
+                "alt_text": "KubeStellar logo",
+            },
         },
         {"type": "divider"},
         {
@@ -377,26 +382,26 @@ def create_meeting_blocks(user_id):
                 "text": "🧑🏻‍💻 *KubeStellar Community Meeting: *\n",
                 # https://github.com/kubestellar/kubestellar/blob/main/OWNERS
             },
-        }
+        },
     ]
 
     blocks.extend(
-            [
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": (
-                            "*📅 Community Meeting Info*\n"
-                            "<http://kubestellar.io/join_us|👉 Get an invite by joining our Google Group>\n\n"
-                            "*📝 Agenda & Meeting Notes*\n"
-                            "<https://docs.google.com/document/d/1XppfxSOD7AOX1lVVVIPWjpFkrxakfBfVzcybRg17-PM/|View Document>"
-                        ),
-                    },
+        [
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": (
+                        "*📅 Community Meeting Info*\n"
+                        "<http://kubestellar.io/join_us|👉 Get an invite by joining our Google Group>\n\n"
+                        "*📝 Agenda & Meeting Notes*\n"
+                        "<https://docs.google.com/document/d/1XppfxSOD7AOX1lVVVIPWjpFkrxakfBfVzcybRg17-PM/|View Document>"
+                    ),
                 },
-                {"type": "divider"},
-            ]
-        )
+            },
+            {"type": "divider"},
+        ]
+    )
 
     # Add quick links section
     blocks.extend(
@@ -425,7 +430,7 @@ def create_meeting_blocks(user_id):
                         "type": "button",
                         "text": {"type": "plain_text", "text": "✨ Join Us"},
                         "url": org_info.get("github", "http://kubestellar.io/join_us"),
-                    }
+                    },
                 ],
             },
             {
@@ -471,6 +476,11 @@ def create_internship_blocks(user_id):
             "text": {
                 "type": "mrkdwn",
                 "text": f"Hi <@{user_id}>! 🌟 *Welcome to our open source community!* We're excited you want to get involved.",
+            },
+            "accessory": {
+                "type": "image",
+                "image_url": "https://avatars.githubusercontent.com/u/134407106?s=200&v=4",
+                "alt_text": "KubeStellar logo",
             },
         },
         {"type": "divider"},
@@ -700,6 +710,11 @@ def send_welcome_dm(user_id):
                 "text": {
                     "type": "mrkdwn",
                     "text": f"Hi <@{user_id}>! 🌟 *Welcome to our open source community!* We're thrilled to have you here.",
+                },
+                "accessory": {
+                    "type": "image",
+                    "image_url": "https://avatars.githubusercontent.com/u/134407106?s=200&v=4",
+                    "alt_text": "KubeStellar logo",
                 },
             },
             {"type": "divider"},
