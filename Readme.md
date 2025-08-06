@@ -1,4 +1,14 @@
-# RepoRover Slack Bot Setup Guide
+
+<div align="center">
+<p align="center">
+<img align="center" alt="repoRover" width="800" src="https://github.com/user-attachments/assets/451c96aa-9ff7-48a6-aa76-41b5519951e1">
+<!--   <img width="250" align="center" alt="dfc-ui" src="https://github.com/user-attachments/assets/96e29a8a-b55f-4d93-b1af-a2d66071c272" /> -->
+</p>
+<p align="center">
+
+<p align="center">A friendly Slack bot that helps new contributors explore repositories in one <code>/command</code></p>
+</p>
+</div>
 
 ## 🚀 Quick Start
 
@@ -216,6 +226,15 @@ Edit `maintainers.json`:
       "github_url": "https://github.com/intervlab/new-project",
       "maintainers": ["maintainer1", "maintainer2"]
     }
+   ...
   }
 }
 ```
+
+<p align="center">
+<img width="450" height="450" alt="image" src="https://github.com/user-attachments/assets/92fe17a5-bffe-469d-beb3-0769bb85d4a5" />
+</p>
+
+## Author
+
+Built with 💙 by **Rahul Vishwakarma** 
