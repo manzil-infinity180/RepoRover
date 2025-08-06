@@ -19,23 +19,51 @@ slack_client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
 # Load maintainers configuration
 def load_maintainers_config():
     """Load maintainer configuration from JSON file"""
-    try:
-        with open("maintainers.json", "r") as file:
-            return json.load(file)
-    except FileNotFoundError:
-        logger.error("maintainers.json not found. Using default config.")
-        return {
-            "projects": {
-                "default": {
-                    "docs_url": "https://docs.kubestellar.io/",
-                    "github_url": "https://github.com/kubestellar/kubestellar",
-                    "maintainers": ["Andy Anderson"],
-                }
-            }
-        }
-    except json.JSONDecodeError:
-        logger.error("Invalid JSON in maintainers.json")
-        return {"projects": {}}
+    return {
+        "projects": {
+            "default": {
+                "project_name": "KubeStellar Core",
+                "docs_url": "https://docs.kubestellar.io",
+                "github_url": "https://github.com/kubestellar/kubestellar",
+                "description": "Multi-cluster configuration management for Kubernetes",
+                "maintainers": ["Andy"],
+            },
+            "kubestellar": {
+                "project_name": "KubeStellar Core",
+                "docs_url": "https://docs.kubestellar.io",
+                "github_url": "https://github.com/kubestellar/kubestellar",
+                "description": "Multi-cluster configuration management for Kubernetes",
+                "maintainers": ["Andy"],
+            },
+            "kubeflex": {
+                "project_name": "KubeFlex",
+                "docs_url": "https://github.com/kubestellar/kubeflex#readme",
+                "github_url": "https://github.com/kubestellar/kubeflex",
+                "description": "A flexible and scalable platform for running Kubernetes control plane APIs.",
+                "maintainers": ["Andy"],
+            },
+            "ui": {
+                "project_name": "KubeStellar UI",
+                "docs_url": "https://github.com/kubestellar/ui#readme",
+                "github_url": "https://github.com/kubestellar/ui",
+                "description": "Web-based user interface for KubeStellar",
+                "maintainers": ["Andy"],
+            },
+            "a2a": {
+                "project_name": "KubeStellar Agent2Agent/MCP Protocol",
+                "docs_url": "https://github.com/kubestellar/a2a#readme",
+                "github_url": "https://github.com/kubestellar/a2a",
+                "description": "KubeStellar's A2A and MCP server component",
+                "maintainers": ["Andy"],
+            },
+        },
+        "organization": {
+            "name": "KubeStellar",
+            "website": "https://kubestellar.io",
+            "docs": "https://docs.kubestellar.io",
+            "github": "https://github.com/kubestellar",
+        },
+    }
 
 
 def get_project_info(project_key="default"):
@@ -70,7 +98,8 @@ def create_project_blocks(username, project_info, command_type="contribute"):
         "github_url", "https://github.com/kubestellar/kubestellar"
     )
     description = project_info.get(
-        "description", "A flexible solution for multi-cluster configuration management for edge, multi-cloud, and hybrid cloud."
+        "description",
+        "A flexible solution for multi-cluster configuration management for edge, multi-cloud, and hybrid cloud.",
     )
     maintainers = format_maintainers(project_info.get("maintainers", ["Andy"]))
 
@@ -82,141 +111,107 @@ def create_project_blocks(username, project_info, command_type="contribute"):
     blocks = [
         {
             "type": "header",
-            "text": {
-                "type": "plain_text",
-                "text": f"🎉 Welcome to {org_name}!"
-            }
+            "text": {"type": "plain_text", "text": f"🎉 Welcome to {org_name}!"},
         },
         {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": f"Hi <@{username}>! 🤖 *I'm the KubeStellar bot* - here to help you get started with contributing to our open source projects!"
-            }
-        },
-        {
-            "type": "divider"
-        },
-        {
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": f"🚀 *{project_name}*\n_{description}_"
+                "text": f"Hi <@{username}>! 🤖 *I'm the KubeStellar bot* - here to help you get started with contributing to our open source projects!",
             },
+        },
+        {"type": "divider"},
+        {
+            "type": "section",
+            "text": {"type": "mrkdwn", "text": f"🚀 *{project_name}*\n_{description}_"},
             "accessory": {
                 "type": "image",
                 "image_url": "https://avatars.githubusercontent.com/u/134407106?s=200&v=4",
-                "alt_text": "KubeStellar logo"
-            }
+                "alt_text": "KubeStellar logo",
+            },
         },
         {
             "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": "📚 *Essential Resources*"
-            }
+            "text": {"type": "mrkdwn", "text": "📚 *Essential Resources*"},
         },
         {
             "type": "section",
             "fields": [
                 {
                     "type": "mrkdwn",
-                    "text": f"*📖 Documentation*\n<{docs_url}|View Docs>"
+                    "text": f"*📖 Documentation*\n<{docs_url}|View Docs>",
                 },
                 {
                     "type": "mrkdwn",
-                    "text": f"*🔗 GitHub Repository*\n<{github_url}|View Code>"
-                }
-            ]
+                    "text": f"*🔗 GitHub Repository*\n<{github_url}|View Code>",
+                },
+            ],
         },
         {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": f"*🌐 Main Website*\n<{org_info.get('website', 'https://kubestellar.io')}|Visit KubeStellar.io>"
-            }
+                "text": f"*🌐 Main Website*\n<{org_info.get('website', 'https://kubestellar.io')}|Visit KubeStellar.io>",
+            },
         },
-        {
-            "type": "divider"
-        },
+        {"type": "divider"},
         {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": f"🤝 *Getting Help*\n*New to open source?* No worries! We're here to help you make your first contribution.\n\n*Have questions about this project?* Tag: {https://github.com/clubanderson}|Andy>"
-            }
+                "text": f"🤝 *Getting Help*\n*New to open source?* No worries! We're here to help you make your first contribution.\n\n*Have questions about this project?* Tag: Andy",
+            },
         },
         {
             "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": "💡 *Quick Start Commands*"
-            }
+            "text": {"type": "mrkdwn", "text": "💡 *Quick Start Commands*"},
         },
         {
             "type": "section",
             "fields": [
+                {"type": "mrkdwn", "text": "`/help`\nView all available commands"},
                 {
                     "type": "mrkdwn",
-                    "text": "`/help`\nView all available commands"
+                    "text": "`/contribute`\nGeneral contribution guidelines",
                 },
+                {"type": "mrkdwn", "text": "`/kubeflex`\nKubeFlex project info"},
+                {"type": "mrkdwn", "text": "`/ui`\nKubeStellar UI project info"},
                 {
                     "type": "mrkdwn",
-                    "text": "`/contribute`\nGeneral contribution guidelines"
+                    "text": "`/know-about-internship`\nKubeStellar Internship(IFOS) info",
                 },
-                {
-                    "type": "mrkdwn",
-                    "text": "`/kubeflex`\nKubeFlex project info"
-                },
-                {
-                    "type": "mrkdwn",
-                    "text": "`/ui`\nKubeStellar UI project info"
-                },
-                {
-                    "type": "mrkdwn",
-                    "text": "`/know-about-internship`\nKubeStellar Internship(IFOS) info"
-                }
-            ]
+            ],
         },
         {
             "type": "actions",
             "elements": [
                 {
                     "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "📖 View Documentation"
-                    },
+                    "text": {"type": "plain_text", "text": "📖 View Documentation"},
                     "style": "primary",
-                    "url": docs_url
+                    "url": docs_url,
                 },
                 {
                     "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "🔗 GitHub Repository"
-                    },
-                    "url": github_url
+                    "text": {"type": "plain_text", "text": "🔗 GitHub Repository"},
+                    "url": github_url,
                 },
                 {
                     "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "🌐 Website"
-                    },
-                    "url": org_info.get('website', 'https://kubestellar.io')
-                }
-            ]
+                    "text": {"type": "plain_text", "text": "🌐 Website"},
+                    "url": org_info.get("website", "https://kubestellar.io"),
+                },
+            ],
         },
         {
             "type": "context",
             "elements": [
                 {
                     "type": "mrkdwn",
-                    "text": "🚀 *Happy Coding!* We're excited to have you in our community! 🌟"
+                    "text": "🚀 *Happy Coding!* We're excited to have you in our community! 🌟",
                 }
-            ]
-        }
+            ],
+        },
     ]
 
     return blocks
@@ -231,81 +226,58 @@ def create_help_blocks(user_id):
     blocks = [
         {
             "type": "header",
-            "text": {
-                "type": "plain_text",
-                "text": "🤖 KubeStellar Bot"
-            }
+            "text": {"type": "plain_text", "text": "🤖 KubeStellar Bot"},
         },
         {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": "Your guide to contributing to KubeStellar open source projects!"
-            }
+                "text": "Your guide to contributing to KubeStellar open source projects!",
+            },
         },
-        {
-            "type": "divider"
-        },
+        {"type": "divider"},
         {
             "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": "🚀 *Project Commands*"
-            }
+            "text": {"type": "mrkdwn", "text": "🚀 *Project Commands*"},
         },
         {
             "type": "section",
             "fields": [
                 {
                     "type": "mrkdwn",
-                    "text": "`/contribute` or `/kubeStellar`\nKubeStellar Core project info"
+                    "text": "`/contribute` or `/kubeStellar`\nKubeStellar Core project info",
                 },
                 {
                     "type": "mrkdwn",
-                    "text": "`/kubeflex`\nKubeFlex project contribution guide"
+                    "text": "`/kubeflex`\nKubeFlex project contribution guide",
                 },
-                {
-                    "type": "mrkdwn",
-                    "text": "`/ui`\nKubeStellar UI project details"
-                },
-                {
-                    "type": "mrkdwn",
-                    "text": "`/a2a`\nApp-to-App (A2A) project info"
-                }
-
-            ]
+                {"type": "mrkdwn", "text": "`/ui`\nKubeStellar UI project details"},
+                {"type": "mrkdwn", "text": "`/a2a`\nApp-to-App (A2A) project info"},
+            ],
         },
         {
             "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": "🔧 *Utility Commands*"
-            }
+            "text": {"type": "mrkdwn", "text": "🔧 *Utility Commands*"},
         },
         {
             "type": "section",
             "fields": [
                 {
                     "type": "mrkdwn",
-                    "text": "`/know-about-internship`\nOpen source contribution guidance"
+                    "text": "`/know-about-internship`\nOpen source contribution guidance",
                 },
-                {
-                    "type": "mrkdwn",
-                    "text": "`/help`\nThis help menu"
-                }
-            ]
+                {"type": "mrkdwn", "text": "`/help`\nThis help menu"},
+            ],
         },
-        {
-            "type": "divider"
-        },
+        {"type": "divider"},
         {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": "👥 *Project Maintainers & Contacts*\n\nNeed help with a specific project? Tag the right people:"
+                "text": "👥 *Project Maintainers & Contacts*\n\nNeed help with a specific project? Tag the right people:",
                 # https://github.com/kubestellar/kubestellar/blob/main/OWNERS
-            }
-        }
+            },
+        },
     ]
 
     # Add maintainers for each project
@@ -314,85 +286,67 @@ def create_help_blocks(user_id):
         project_name = project_data.get(
             "project_name", project_key.replace("_", " ").title()
         )
-        blocks.append({
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": f"*{project_name}:* {maintainers}"
+        blocks.append(
+            {
+                "type": "section",
+                "text": {"type": "mrkdwn", "text": f"*{project_name}:* {maintainers}"},
             }
-        })
+        )
 
     # Add quick links section
-    blocks.extend([
-        {
-            "type": "divider"
-        },
-        {
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": "🌟 *Quick Links*"
-            }
-        },
-        {
-            "type": "actions",
-            "elements": [
-                {
-                    "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "🌐 Website"
+    blocks.extend(
+        [
+            {"type": "divider"},
+            {"type": "section", "text": {"type": "mrkdwn", "text": "🌟 *Quick Links*"}},
+            {
+                "type": "actions",
+                "elements": [
+                    {
+                        "type": "button",
+                        "text": {"type": "plain_text", "text": "🌐 Website"},
+                        "style": "primary",
+                        "url": org_info.get("website", "https://kubestellar.io"),
                     },
-                    "style": "primary",
-                    "url": org_info.get('website', 'https://kubestellar.io')
-                },
-                {
-                    "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "📖 Documentation"
+                    {
+                        "type": "button",
+                        "text": {"type": "plain_text", "text": "📖 Documentation"},
+                        "url": org_info.get("docs", "https://docs.kubestellar.io"),
                     },
-                    "url": org_info.get('docs', 'https://docs.kubestellar.io')
-                },
-                {
-                    "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "🔗 GitHub Org"
+                    {
+                        "type": "button",
+                        "text": {"type": "plain_text", "text": "🔗 GitHub Org"},
+                        "url": org_info.get("github", "https://github.com/kubestellar"),
                     },
-                    "url": org_info.get('github', 'https://github.com/kubestellar')
-                },
-                {
-                    "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "✨ Join Us"
+                    {
+                        "type": "button",
+                        "text": {"type": "plain_text", "text": "✨ Join Us"},
+                        "url": org_info.get("github", "http://kubestellar.io/join_us"),
                     },
-                    "url": org_info.get('github', 'http://kubestellar.io/join_us')
-                }
-            ]
-        },
-        {
-            "type": "context",
-            "elements": [
-                {
-                    "type": "mrkdwn",
-                    "text": "💡 *Pro Tip:* Start with `/contribute` to get familiar with our main project, then explore specific components!"
-                }
-            ]
-        },
-        {
-            "type": "context",
-            "elements": [
-                {
-                    "type": "mrkdwn",
-                    "text": "🚀 *Welcome to the KubeStellar community!*"
-                }
-            ]
-        }
-    ])
+                ],
+            },
+            {
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "mrkdwn",
+                        "text": "💡 *Pro Tip:* Start with `/contribute` to get familiar with our main project, then explore specific components!",
+                    }
+                ],
+            },
+            {
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "mrkdwn",
+                        "text": "🚀 *Welcome to the KubeStellar community!*",
+                    }
+                ],
+            },
+        ]
+    )
 
     return blocks
+
 
 def create_meeting_blocks(user_id):
     """Create meeting message blocks"""
@@ -405,111 +359,95 @@ def create_meeting_blocks(user_id):
             "type": "header",
             "text": {
                 "type": "plain_text",
-                "text": "🎯 Interested in Joining KubeStellar Community Meeting?"
-            }
+                "text": "🎯 Interested in Joining KubeStellar Community Meeting?",
+            },
         },
         {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": f"Hi <@{user_id}>! 🌟 *Welcome to our open source community!* We're excited you want to get involved."
-            }
+                "text": f"Hi <@{user_id}>! 🌟 *Welcome to our open source community!* We're excited you want to get involved.",
+            },
         },
+        {"type": "divider"},
         {
-            "type": "divider"
-        },        
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "🧑🏻‍💻 *KubeStellar Community Meeting: *\n",
+                # https://github.com/kubestellar/kubestellar/blob/main/OWNERS
+            },
+        }
     ]
 
-    # Add maintainers for each project
-    for project_key, project_data in projects.items():
-        maintainers = format_maintainers(project_data.get("maintainers", []))
-        project_name = project_data.get(
-            "project_name", project_key.replace("_", " ").title()
+    blocks.extend(
+            [
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": (
+                            "*📅 Community Meeting Info*\n"
+                            "<http://kubestellar.io/join_us|👉 Get an invite by joining our Google Group>\n\n"
+                            "*📝 Agenda & Meeting Notes*\n"
+                            "<https://docs.google.com/document/d/1XppfxSOD7AOX1lVVVIPWjpFkrxakfBfVzcybRg17-PM/|View Document>"
+                        ),
+                    },
+                },
+                {"type": "divider"},
+            ]
         )
-        blocks.append({
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": f"*{project_name}:* {maintainers}"
-            }
-        })
-
-        blocks.extend([
-        {
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": (
-                    "*📅 Community Meeting Info*\n"
-                    "<http://kubestellar.io/join_us|👉 Get an invite by joining our Google Group>\n\n"
-                    "*📝 Agenda & Meeting Notes*\n"
-                    "<https://docs.google.com/document/d/1XppfxSOD7AOX1lVVVIPWjpFkrxakfBfVzcybRg17-PM/|View Document>"
-                )
-            }
-        },
-        {
-            "type": "divider"
-        }
-    ])
 
     # Add quick links section
-    blocks.extend([
-        {
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": "🌟 *Quick Links*"
-            }
-        },
-        {
-            "type": "actions",
-            "elements": [
-                {
-                    "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "🌐 Website"
+    blocks.extend(
+        [
+            {"type": "section", "text": {"type": "mrkdwn", "text": "🌟 *Quick Links*"}},
+            {
+                "type": "actions",
+                "elements": [
+                    {
+                        "type": "button",
+                        "text": {"type": "plain_text", "text": "🌐 Website"},
+                        "style": "primary",
+                        "url": org_info.get("website", "https://kubestellar.io"),
                     },
-                    "style": "primary",
-                    "url": org_info.get('website', 'https://kubestellar.io')
-                },
-                {
-                    "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "📖 Documentation"
+                    {
+                        "type": "button",
+                        "text": {"type": "plain_text", "text": "📖 Documentation"},
+                        "url": org_info.get("docs", "https://docs.kubestellar.io"),
                     },
-                    "url": org_info.get('docs', 'https://docs.kubestellar.io')
-                },
-                {
-                    "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "🔗 GitHub Org"
+                    {
+                        "type": "button",
+                        "text": {"type": "plain_text", "text": "🔗 GitHub Org"},
+                        "url": org_info.get("github", "https://github.com/kubestellar"),
                     },
-                    "url": org_info.get('github', 'https://github.com/kubestellar')
-                }
-            ]
-        },
-        {
-            "type": "context",
-            "elements": [
-                {
-                    "type": "mrkdwn",
-                    "text": "💡 *Pro Tip:* Start with `/contribute` to get familiar with our main project, then explore specific components!"
-                }
-            ]
-        },
-        {
-            "type": "context",
-            "elements": [
-                {
-                    "type": "mrkdwn",
-                    "text": "🚀 *Welcome to the KubeStellar community!*"
-                }
-            ]
-        }
-    ])
+                    {
+                        "type": "button",
+                        "text": {"type": "plain_text", "text": "✨ Join Us"},
+                        "url": org_info.get("github", "http://kubestellar.io/join_us"),
+                    }
+                ],
+            },
+            {
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "mrkdwn",
+                        "text": "💡 *Pro Tip:* Start with `/contribute` to get familiar with our main project, then explore specific components!",
+                    }
+                ],
+            },
+            {
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "mrkdwn",
+                        "text": "🚀 *Welcome to the KubeStellar community!*",
+                    }
+                ],
+            },
+        ]
+    )
 
     return blocks
 
@@ -525,115 +463,101 @@ def create_internship_blocks(user_id):
             "type": "header",
             "text": {
                 "type": "plain_text",
-                "text": "🎯 Interested in Contributing to KubeStellar?"
-            }
+                "text": "🎯 Interested in Contributing to KubeStellar?",
+            },
         },
         {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": f"Hi <@{user_id}>! 🌟 *Welcome to our open source community!* We're excited you want to get involved."
-            }
+                "text": f"Hi <@{user_id}>! 🌟 *Welcome to our open source community!* We're excited you want to get involved.",
+            },
         },
+        {"type": "divider"},
         {
-            "type": "divider"
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "🚀 *Getting Started with Open Source Contributions*",
+            },
         },
         {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": "🚀 *Getting Started with Open Source Contributions*"
-            }
-        },
-        {
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": "📋 *Available Projects*\nChoose a project that matches your interests and skills:"
-            }
+                "text": "📋 *Available Projects*\nChoose a project that matches your interests and skills:",
+            },
         },
         {
             "type": "section",
             "fields": [
                 {
                     "type": "mrkdwn",
-                    "text": "*KubeStellar Core*\nMulti-cluster Kubernetes management"
+                    "text": "*KubeStellar Core*\nMulti-cluster Kubernetes management",
                 },
                 {
                     "type": "mrkdwn",
-                    "text": "*KubeFlex*\nFlexible cluster management tools"
+                    "text": "*KubeFlex*\nFlexible cluster management tools",
                 },
                 {
                     "type": "mrkdwn",
-                    "text": "*KubeStellar UI*\nWeb interface and dashboards"
+                    "text": "*KubeStellar UI*\nWeb interface and dashboards",
                 },
                 {
                     "type": "mrkdwn",
-                    "text": "*App-to-App (A2A)*\nCommunication framework"
-                }
-            ]
+                    "text": "*App-to-App (A2A)*\nCommunication framework",
+                },
+            ],
         },
         {
             "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": "📚 *Essential Resources*"
-            }
+            "text": {"type": "mrkdwn", "text": "📚 *Essential Resources*"},
         },
         {
             "type": "actions",
             "elements": [
                 {
                     "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "📖 Documentation"
-                    },
+                    "text": {"type": "plain_text", "text": "📖 Documentation"},
                     "style": "primary",
-                    "url": org_info.get('docs', 'https://docs.kubestellar.io')
+                    "url": org_info.get("docs", "https://docs.kubestellar.io"),
                 },
                 {
                     "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "🔗 GitHub Organization"
-                    },
-                    "url": org_info.get('github', 'https://github.com/kubestellar')
+                    "text": {"type": "plain_text", "text": "🔗 GitHub Organization"},
+                    "url": org_info.get("github", "https://github.com/kubestellar"),
                 },
                 {
                     "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": "🌐 Community Website"
-                    },
-                    "url": org_info.get('website', 'https://kubestellar.io')
-                }
-            ]
+                    "text": {"type": "plain_text", "text": "🌐 Community Website"},
+                    "url": org_info.get("website", "https://kubestellar.io"),
+                },
+            ],
         },
         {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
                 # "text": f"🤝 *Need Help?*\n*New to open source?* Perfect! We love helping first-time contributors.\n\n*Questions or need guidance?* Tag: {format_maintainers(project_info.get('maintainers', ['Andy']))}"
-                "text": f"🤝 *Need Help?*\n*New to open source?* Perfect! We love helping first-time contributors.\n\n*Questions or need guidance?* Tag: Andy Anderson"
-            }
+                "text": f"🤝 *Need Help?*\n*New to open source?* Perfect! We love helping first-time contributors.\n\n*Questions or need guidance?* Tag: Andy Anderson",
+            },
         },
         {
             "type": "section",
             "text": {
                 "type": "mrkdwn",
-                "text": "💡 *Next Steps*\n1. Pick a project that interests you\n2. Check out the GitHub repository\n3. Look for \"good first issue\" labels\n4. Join our community discussions\n5. Don't hesitate to ask questions!"
-            }
+                "text": '💡 *Next Steps*\n1. Pick a project that interests you\n2. Check out the GitHub repository\n3. Look for "good first issue" labels\n4. Join our community discussions\n5. Don\'t hesitate to ask questions!',
+            },
         },
         {
             "type": "context",
             "elements": [
                 {
                     "type": "mrkdwn",
-                    "text": "🚀✨ *Let's build something amazing together!*"
+                    "text": "🚀✨ *Let's build something amazing together!*",
                 }
-            ]
-        }
+            ],
+        },
     ]
 
     return blocks
@@ -657,10 +581,16 @@ def handle_slash_commands():
 
         # Handle different commands
         if command == "/contribute":
-            project_info = get_project_info("default")
+            project_info = {
+                "project_name": "KubeStellar",
+                "docs_url": "https://docs.kubestellar.io",
+                "github_url": "https://github.com/kubestellar/kubestellar",
+                "description": "Multi-cluster configuration management for Kubernetes",
+                "maintainers": ["Andy"],
+            }
             blocks = create_project_blocks(user_id, project_info, "contribute")
 
-        if command == "/kubestellar":
+        elif command == "/kubestellar":
             project_info = get_project_info("kubestellar")
             blocks = create_project_blocks(user_id, project_info, "kubestellar")
 
@@ -691,24 +621,23 @@ def handle_slash_commands():
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": f"❌ Unknown command: `{command}`\n\nType `/help` to see available commands."
-                    }
+                        "text": f"❌ Unknown command: `{command}`\n\nType `/help` to see available commands.",
+                    },
                 }
             ]
 
         # Send response back to Slack with blocks
-        return jsonify({
-            "response_type": "in_channel",
-            "blocks": blocks
-        })
+        return jsonify({"response_type": "in_channel", "blocks": blocks})
 
     except Exception as e:
         logger.error(f"Error handling slash command: {str(e)}")
         return (
-            jsonify({
-                "response_type": "ephemeral",
-                "text": "Sorry, something went wrong. Please try again later.",
-            }),
+            jsonify(
+                {
+                    "response_type": "ephemeral",
+                    "text": "Sorry, something went wrong. Please try again later.",
+                }
+            ),
             500,
         )
 
@@ -763,100 +692,92 @@ def send_welcome_dm(user_id):
                 "type": "header",
                 "text": {
                     "type": "plain_text",
-                    "text": "🎉 Hey there, welcome to KubeStellar!"
-                }
+                    "text": "🎉 Hey there, welcome to KubeStellar!",
+                },
             },
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": f"Hi <@{user_id}>! 🌟 *Welcome to our open source community!* We're thrilled to have you here."
-                }
+                    "text": f"Hi <@{user_id}>! 🌟 *Welcome to our open source community!* We're thrilled to have you here.",
+                },
             },
-            {
-                "type": "divider"
-            },
+            {"type": "divider"},
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "🚀 *Getting Started Guide*\n\n📋 *Explore Our Projects*\nChoose what interests you most:"
-                }
+                    "text": "🚀 *Getting Started Guide*\n\n📋 *Explore Our Projects*\nChoose what interests you most:",
+                },
             },
             {
                 "type": "section",
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": "`/contribute`\nKubeStellar Core (multi-cluster management)"
+                        "text": "`/contribute`\nKubeStellar Core (multi-cluster management)",
                     },
                     {
                         "type": "mrkdwn",
-                        "text": "`/kubeflex`\nKubeFlex (flexible cluster tools)"
+                        "text": "`/kubeflex`\nKubeFlex (flexible cluster tools)",
                     },
                     {
                         "type": "mrkdwn",
-                        "text": "`/ui`\nKubeStellar UI (web interfaces)"
+                        "text": "`/ui`\nKubeStellar UI (web interfaces)",
                     },
                     {
                         "type": "mrkdwn",
-                        "text": "`/a2a`\nApp-to-App communication framework"
-                    }
-                ]
+                        "text": "`/a2a`\nApp-to-App communication framework",
+                    },
+                ],
             },
             {
                 "type": "actions",
                 "elements": [
                     {
                         "type": "button",
-                        "text": {
-                            "type": "plain_text",
-                            "text": "📖 Documentation"
-                        },
+                        "text": {"type": "plain_text", "text": "📖 Documentation"},
                         "style": "primary",
-                        "url": org_info.get('docs', 'https://docs.kubestellar.io')
+                        "url": org_info.get("docs", "https://docs.kubestellar.io"),
                     },
                     {
                         "type": "button",
                         "text": {
                             "type": "plain_text",
-                            "text": "🔗 GitHub Organization"
+                            "text": "🔗 GitHub Organization",
                         },
-                        "url": org_info.get('github', 'https://github.com/kubestellar')
+                        "url": org_info.get("github", "https://github.com/kubestellar"),
                     },
                     {
                         "type": "button",
-                        "text": {
-                            "type": "plain_text",
-                            "text": "🌐 Community Website"
-                        },
-                        "url": org_info.get('website', 'https://kubestellar.io')
-                    }
-                ]
+                        "text": {"type": "plain_text", "text": "🌐 Community Website"},
+                        "url": org_info.get("website", "https://kubestellar.io"),
+                    },
+                ],
             },
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "🤝 *Need Help?*\n*New to open source?* Perfect! We're here to guide you.\n\n*Have questions?* Use `/help` to see all commands and find the right maintainers to tag."
-                }
+                    "text": "🤝 *Need Help?*\n*New to open source?* Perfect! We're here to guide you.\n\n*Have questions?* Use `/help` to see all commands and find the right maintainers to tag.",
+                },
             },
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": "💡 *Pro Tips for New Contributors*\n1. Start with `/contribute` to understand our main project\n2. Look for \"good first issue\" labels on GitHub\n3. Join our community discussions\n4. Don't hesitate to ask questions - we're friendly! 😊"
-                }
+                    "text": "💡 *Pro Tips for New Contributors*\n1. Start with `/contribute` to understand our main project\n2. Look for \"good first issue\" labels on GitHub\n3. Join our community discussions\n4. Don't hesitate to ask questions - we're friendly! 😊",
+                },
             },
             {
                 "type": "context",
                 "elements": [
                     {
                         "type": "mrkdwn",
-                        "text": "🚀✨ *Ready to make an impact?* Let's build the future of Kubernetes together!\n\n*Happy coding!* 🧰"
+                        "text": "🚀✨ *Ready to make an impact?* Let's build the future of Kubernetes together!\n\n*Happy coding!* 🧰",
                     }
-                ]
-            }
+                ],
+            },
         ]
 
         # Send DM using chat.postMessage with blocks
