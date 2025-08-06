@@ -7,6 +7,13 @@
       "description": "Multi-cluster configuration management for Kubernetes",
       "maintainers": ["Andy"]
     },
+    "kubestellar": {
+      "project_name": "KubeStellar Core",
+      "docs_url": "https://docs.kubestellar.io",
+      "github_url": "https://github.com/kubestellar/kubestellar",
+      "description": "Multi-cluster configuration management for Kubernetes",
+      "maintainers": ["Andy"]
+    },
     "kubeflex": {
       "project_name": "KubeFlex",
       "docs_url": "https://github.com/kubestellar/kubeflex#readme",

@@ -534,8 +534,8 @@ def handle_slash_commands():
             blocks = create_project_blocks(user_id, project_info, "contribute")
 
         if command == "/kubestellar":
-            project_info = get_project_info("default")
-            blocks = create_project_blocks(user_id, project_info, "contribute")
+            project_info = get_project_info("kubestellar")
+            blocks = create_project_blocks(user_id, project_info, "kubestellar")
 
         elif command == "/kubeflex":
             project_info = get_project_info("kubeflex")
