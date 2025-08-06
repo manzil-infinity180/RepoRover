@@ -682,6 +682,9 @@ def handle_slash_commands():
         elif command == "/help":
             blocks = create_help_blocks(user_id)
 
+        elif command == "/meeting":
+            blocks = create_meeting_blocks(user_id)
+
         else:
             blocks = [
                 {
